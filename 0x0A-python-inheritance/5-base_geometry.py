@@ -3,6 +3,8 @@
 """
 Defines a baseshape class.
 """
+
+
 class BaseGeometry:
     """ Empty class """
     pass

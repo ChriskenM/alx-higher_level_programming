@@ -3,6 +3,8 @@
 """
 Defines baseshape class.
 """
+
+
 class BaseGeometry:
     """ Empty class """
     def area(self):
