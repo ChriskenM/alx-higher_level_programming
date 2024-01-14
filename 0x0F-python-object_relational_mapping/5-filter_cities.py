@@ -13,9 +13,10 @@ if __name__ == '__main__':
                          db=sys.argv[3])
 
     cur = db.cursor()
-    cur.execute("SELECT cities.id, cities.name, states.name \
-            FROM cities JOIN states ON cities.state_id = states.id \
-            WHERE state.name = '{}';".format(sys.argv[4]))
+    cur.execute("SELECT * FROM `cities` as `c` \
+                INNER JOIN `states` as `s` \
+                ON `c`.`state_id` = `s`.`id` \
+                ORDER BY `c`.`id`".format(sys.argv[4]))
     states = cur.fetchall()
 
     for state in states:
