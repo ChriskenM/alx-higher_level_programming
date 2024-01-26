@@ -16,19 +16,12 @@ if __name__ == "__main__":
     url = "https://api.github.com/repos/{}/{}/commits".format(
             owner_name, repo_name)
 
+    response = requests.get(url)
+    commits = response.json()
     try:
-        response = requests.get(url)
-        response.raise_for_status()
-
-        commits = response.json()[:10]
-        for commit in commits:
-            sha = commit['sha']
-            author_name = commit['commit']['author']['name']
-            print("{}: {}".format(sha, author_name))
-
-    except requests.exceptions.HTTPError as errh:
-        print("Error code: {}".format(response.status_code))
-    except ValueError:
-        print("Not a valid JSON")
-    except Exception as err:
-        print("Error: {}".format(err))
+        for i in range(10):
+            print("{}: {}".format(
+                commits[i].get("sha"),
+                commits[i].get("commit").get("author").get("name")))
+    except IndexError:
+        pass
