@@ -5,6 +5,7 @@ with a personal access token.
 """
 import requests
 import sys
+from requests.auth import HTTPBasicAuth
 
 
 if __name__ == "__main__":
@@ -16,15 +17,6 @@ if __name__ == "__main__":
     token = sys.argv[2]
     url = "https://api.github.com/user"
 
-    try:
-        response = requests.get(url, auth=(username, token))
-        response.raise_for_status()
-
-        json_data = response.json()
-        print("{}".format(json_data['id']))
-    except requests.exceptions.HTTPError as errh:
-        print("Error code: {}".format(response.status_code))
-    except ValueError:
-        print("Not a valid JSON")
-    except Exception as err:
-        print("Error: {}".format(err))
+    auth = HTTPBasicAuth(username, token)
+    response = requests.get(url, auth=auth)
+    print(response.json().get("id"))
